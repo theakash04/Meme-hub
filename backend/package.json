@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "handling socket.io and https requests",
+  "license": "ISC",
+  "author": "theakash04",
+  "type": "commonjs",
+  "main": "src/server.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "npm run build && node dist/server.js",
+    "dev": "npx nodemon --ext ts --exec 'npx ts-node src/server.ts'"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.10",
+    "@types/socket.io": "^3.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
