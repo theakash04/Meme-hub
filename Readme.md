@@ -23,5 +23,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## ✉️ Contact
 
-Your Name - [@theakash04](https://twitter.com/theakash04)
-Project Link: [https://github.com/theakash04/Meme-hub](https://github.com/theakash04/Meme-hub)
+[@theakash04](https://twitter.com/theakash04)
