@@ -43,14 +43,18 @@ button {
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #0f7cf0;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
 button:hover {
   border-color: #646cff;
+  background-color: #096ad1;
 }
 
 button:focus,
@@ -58,12 +62,21 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+#file-uploader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
 #drop-zone {
   width: 300px;
   height: 200px;
-  border: 4px dashed #007bff;
+  border: 3px dashed #007bff;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -91,17 +104,122 @@ button:focus-visible {
   cursor: pointer;
 }
 
+#drop-zone div {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
 #preview {
   margin-top: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#preview button {
+  background-color: #c0392b;
 }
 
-#preview img {
-  max-width: 100%;
-  height: auto;
-  border: 3px solid #ddd;
+#preview-container img {
+  max-width: auto;
+  height: 200px;
+  border: none;
   padding: 5px;
   border-radius: 5px;
+}
+
+#preview-container {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 20px;
+}
+
+#preview-container button {
+  margin-top: 10px;
+  background-color: #dd4141;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#preview-container button:hover {
+  background-color: #c0392b;
+}
+#preview-container button img {
+  border: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+}
+
+#canvas-utils-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#canvas-container {
+  position: relative;
+  width: 100lvw;
+  min-height: 100lvh;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#canvas-utils span {
+  margin: 10px;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+}
+
+#canvas-utils {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#canvas-utils div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#canvas-utils div > select {
+  padding: 5px;
+  font-size: 16px;
+  width: 180px;
+  margin-bottom: 10px;
+}
+
+.tools-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.tool-button {
+  background-color: transparent;
 }
 
 @media (prefers-color-scheme: light) {
