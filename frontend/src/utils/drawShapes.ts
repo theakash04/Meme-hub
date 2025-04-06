@@ -11,10 +11,6 @@ const drawShapes = (canvas: HTMLCanvasElement, shape: shapesType) => {
 
   switch (shape.type) {
     case "rectangle":
-      ctx.beginPath();
-      ctx.fillRect(shape.x, shape.y, shape.width!, shape.height!);
-      ctx.strokeRect(shape.x, shape.y, shape.width!, shape.height!);
-      break;
     case "square":
       ctx.beginPath();
       ctx.fillRect(shape.x, shape.y, shape.width!, shape.height!);

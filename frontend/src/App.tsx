@@ -1,19 +1,50 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import CanvasContext from "./context/canvaContext";
 import socketContext from "./context/socketContext";
 import FileUploader from "./components/fileUploader";
 import ToolsPanel from "./components/ToolsPanels";
-
-
+import { shapesType } from "./types/globalTypes";
+import drawShapes from "./utils/drawShapes";
+import Header from "./components/Header";
 
 function App() {
   const canvasRef = useContext(CanvasContext);
   const socket = useContext(socketContext);
-  const [isStart, setIsStart] = useState(false);
+  const [isStart, setIsStart] = useState(true);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
   const [dimension, setDimension] = useState<{ width: number; height: number }>(
-    { width: 1280, height: 720 }
+    { width: 1024, height: 768 }
   );
-  
+
+  const handleResize = useCallback(() => {
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
+
+  const redrawShapes = useCallback(
+    (shapes: shapesType[]) => {
+      if (!canvasRef.current) return;
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (shapes.length > 0) {
+        shapes.forEach((s) => drawShapes(canvas, s));
+      }
+    },
+    [canvasRef]
+  );
 
   useEffect(() => {
     if (!socket) return;
@@ -34,19 +65,30 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    if (!isStart) return;
-    if (!canvasRef.current) return;
+    if (!isStart || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    // do it in 16:9 aspect ratio
-    canvas.width = dimension.width;
-    canvas.height = dimension.height;
+
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    const aspectRatio = dimension.width / dimension.height;
+
+    let newWidth = screenWidth * 0.9;
+    let newHeight = newWidth / aspectRatio;
+
+    if (newHeight > screenHeight * 0.9) {
+      newHeight = screenHeight * 0.8;
+      newWidth = newHeight * aspectRatio;
+    }
+    canvas.width = newWidth;
+    canvas.height = newHeight;
     if (!ctx) return;
 
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }, [canvasRef, isStart]);
+  }, [windowSize, canvasRef, isStart, dimension]);
 
   function handleStart() {
     setIsStart(true);
@@ -67,8 +109,13 @@ function App() {
   if (isStart) {
     return (
       <div id="canvas-container">
-        <ToolsPanel />
-        <canvas ref={canvasRef} />
+        <Header />
+        <ToolsPanel redrawShapes={redrawShapes} />
+        <canvas
+          ref={canvasRef}
+          width={dimension.width}
+          height={dimension.height}
+        />
       </div>
     );
   }
