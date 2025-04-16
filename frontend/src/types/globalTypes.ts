@@ -15,7 +15,12 @@ export interface shapesType {
   endX?: number;
   endY?: number;
   color: string;
+  text?: string;
+  textColor?: string;
+  fontSize?: number;
+  fontFamily?: string;
   strokeColor?: string;
   lineWidth?: number;
-  type: "rectangle" | "circle" | "arrow"| "square";
+  isSelected: boolean;
+  type: "rectangle" | "circle" | "arrow" | "square" | "text";
 }

@@ -30,18 +30,24 @@ function App() {
 
   const redrawShapes = useCallback(
     (shapes: shapesType[]) => {
-      if (!canvasRef.current) return;
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+      requestAnimationFrame(() => {
+        if (!canvasRef.current) return;
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      if (shapes.length > 0) {
-        shapes.forEach((s) => drawShapes(canvas, s));
-      }
+        if (shapes.length > 0) {
+          shapes.forEach((s) => {
+            drawShapes(canvas, s)
+          }
+          );
+        }
+      })
+
     },
     [canvasRef]
   );
